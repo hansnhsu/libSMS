@@ -398,17 +398,23 @@
                                  if ((NSNull *)thisTile != [NSNull null])
                                      [thisTile removeFromSuperview];
                              }];
-                             [_tiles removeObjectsAtIndexes:i];
                              
-                             _numberOfTiles = [_tiles count];
-                             
-                             [UIView animateWithDuration:0.5
-                                                   delay:0.0
-                                                 options:UIViewAnimationOptionCurveEaseInOut
-                                              animations:^{
-                                                  [self _updateTiles:nil];
-                                              }
-                                              completion:nil];
+                             @try {
+                                 [_tiles removeObjectsAtIndexes:i];
+                                 
+                                 _numberOfTiles = [_tiles count];
+                                 
+                                 [UIView animateWithDuration:0.5
+                                                       delay:0.0
+                                                     options:UIViewAnimationOptionCurveEaseInOut
+                                                  animations:^{
+                                                      [self _updateTiles:nil];
+                                                  }
+                                                  completion:nil];
+                             }
+                             @catch (NSException *exception) {
+                                 [self reloadTiles];
+                             }
                          }];
     } else {
         [removedTiles enumerateObjectsUsingBlock:^(SMSTile *thisTile, NSUInteger idx, BOOL *stop) {

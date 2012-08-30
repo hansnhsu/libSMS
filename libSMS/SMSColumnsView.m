@@ -275,8 +275,9 @@
     
     self.contentSize = CGSizeMake(w, maxColumnHeight);
     
-    if (animated)
+    if (animated) {
         [UIView commitAnimations];
+    }
 }
 
 @end

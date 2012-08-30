@@ -46,7 +46,7 @@ SMSOrientation SMSDefaultPadRotationMask = 0;
 #ifdef TARGET_iOS
 @synthesize loadingView;
 #endif
-@synthesize firstResponder, popup;
+@synthesize firstResponder, popper=_popper;
 //@synthesize tableView=_tableView;
 
 #pragma mark - Class Methods
@@ -77,8 +77,9 @@ SMSOrientation SMSDefaultPadRotationMask = 0;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
+    if (self) {
         notificationObservers = [[NSMutableSet alloc] init];
+    }
     return self;
 }
 
@@ -100,7 +101,7 @@ SMSOrientation SMSDefaultPadRotationMask = 0;
     self.loadingView = nil;
 #endif
     
-    self.popup = nil;
+    self.popper = nil;
 }
 
 #pragma mark - Transitions
@@ -147,7 +148,7 @@ SMSOrientation SMSDefaultPadRotationMask = 0;
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	self.popup = nil;
+	self.popper = nil;
 }
 
 #pragma mark - Loading View
@@ -220,33 +221,38 @@ SMSOrientation SMSDefaultPadRotationMask = 0;
 
 #pragma mark - Popup
 
-- (void)setPopup:(id)aPopup
+- (void)setPopper:(id)aPopup
 {
-	if ([popup isKindOfClass:[UIActionSheet class]]) {
-		UIActionSheet *actionSheet = (UIActionSheet *)popup;
+	if ([_popper isKindOfClass:[UIActionSheet class]]) {
+		UIActionSheet *actionSheet = (UIActionSheet *)_popper;
 		[actionSheet dismissWithClickedButtonIndex:actionSheet.cancelButtonIndex animated:YES];
-	} else if ([popup respondsToSelector:@selector(dismissPopoverAnimated:)]) {
-        [popup dismissPopoverAnimated:YES];
-        if ([[popup delegate] respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
-            [[popup delegate] popoverControllerDidDismissPopover:popup];
+	} else if ([_popper respondsToSelector:@selector(dismissPopoverAnimated:)]) {
+        [_popper dismissPopoverAnimated:YES];
+        if ([[_popper delegate] respondsToSelector:@selector(popoverControllerDidDismissPopover:)])
+            [[_popper delegate] popoverControllerDidDismissPopover:_popper];
     }
 	
-    if ([popup delegate] == self)
-        [popup setDelegate:nil];
-	popup = aPopup;
-	[popup setDelegate:self];
+    if ([_popper delegate] == self) {
+        [_popper setDelegate:nil];
+    }
+	_popper = aPopup;
+	[_popper setDelegate:self];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	if (actionSheet == popup)
-        popup = nil;
+	if (actionSheet == _popper) {
+        [_popper setDelegate:nil];
+        _popper = nil;
+    }
 }
 
 - (void)popoverControllerDidDismissPopover:(id)pc
 {
-	if (pc == popup)
-        popup = nil;
+	if (pc == _popper) {
+        [_popper setDelegate:nil];
+        _popper = nil;
+    }
 }
 
 #pragma mark - UIScrollView delegate

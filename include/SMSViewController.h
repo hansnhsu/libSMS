@@ -56,7 +56,6 @@ extern SMSOrientation SMSDefaultPadRotationMask;
     //SMSLoadingView *loadingView;
     
     UIResponder __weak *firstResponder;
-    id popup;
     
     //UITableView *_tableView;
     
@@ -67,7 +66,7 @@ extern SMSOrientation SMSDefaultPadRotationMask;
 #endif
 
 @property (nonatomic, weak) UIResponder *firstResponder;
-@property (nonatomic, strong) id popup;
+@property (nonatomic, strong) id popper;
 
 //@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
