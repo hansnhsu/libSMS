@@ -185,9 +185,14 @@
         
         if (!allowsMultipleSelection) {
             [_selectedTileIndices enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-                SMSTile *thisTile = [_tiles objectAtIndex:idx];
-                if ((NSNull *)thisTile != [NSNull null])
-                    thisTile.selected = NO;
+                @try {
+                    SMSTile *thisTile = [_tiles objectAtIndex:idx];
+                    if ((NSNull *)thisTile != [NSNull null])
+                        thisTile.selected = NO;
+                }
+                @catch (NSException *exception) {
+                    
+                }
             }];
             [_selectedTileIndices removeAllIndexes];
         }
