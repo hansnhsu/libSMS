@@ -814,6 +814,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = libSMSForceLoad;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -835,6 +836,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = libSMSForceLoad;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 				ZERO_LINK = NO;
 			};
 			name = Release;
