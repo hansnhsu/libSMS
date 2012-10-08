@@ -80,5 +80,6 @@
 
 - (void)reloadSections:(BOOL)animated;
 - (void)layoutColumns:(BOOL)animated;
+- (UIView *)viewForSectionAtIndex:(NSUInteger)idx;
 
 @end

@@ -289,4 +289,9 @@
         [UIView commitAnimations];
 }
 
+- (UIView *)viewForSectionAtIndex:(NSUInteger)idx
+{
+    return [_sections objectAtIndex:idx];
+}
+
 @end
