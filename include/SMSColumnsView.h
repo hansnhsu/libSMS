@@ -69,8 +69,8 @@
     NSUInteger _numberOfSections;
     NSMutableArray *_sections;
 }
-@property (nonatomic, weak) id<SMSColumnsViewDataSource> dataSource;
-@property (nonatomic, weak) id<SMSColumnsViewDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<SMSColumnsViewDataSource> dataSource;
+@property (nonatomic, weak) IBOutlet id<SMSColumnsViewDelegate> delegate;
 
 @property (nonatomic) CGFloat borderMargin;
 @property (nonatomic) CGFloat columnPadding;

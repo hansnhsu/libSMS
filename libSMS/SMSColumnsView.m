@@ -51,18 +51,28 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.showsHorizontalScrollIndicator = NO;
-        
-        borderMargin = 20;
-        columnPadding = 20;
-        sectionPadding = 10;
-        
-        autoLayoutEnabled = YES;
-        
-        _columns = [[NSMutableArray alloc] init];
-        _sections = [[NSMutableArray alloc] init];
+        [self _init];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self _init];
+}
+
+- (void)_init
+{
+    self.showsHorizontalScrollIndicator = NO;
+    
+    borderMargin = 20;
+    columnPadding = 20;
+    sectionPadding = 10;
+    
+    autoLayoutEnabled = YES;
+    
+    _columns = [[NSMutableArray alloc] init];
+    _sections = [[NSMutableArray alloc] init];
 }
 
 - (void)_reloadOrLayout
